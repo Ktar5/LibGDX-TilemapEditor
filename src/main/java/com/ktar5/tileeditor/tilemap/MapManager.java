@@ -99,7 +99,7 @@ public class MapManager {
                 createTilemap.getWidth(),
                 createTilemap.getHeight(),
                 createTilemap.getTileWidth(),
-                createTilemap.getTileHeight());
+                createTilemap.getTileHeight(), UUID.randomUUID());
         TileLayer tileLayer = new TileLayer(tilemap, "Tile Layer", true, 0, 0);
         tilemap.getLayers().getLayers().add(tileLayer);
         openMaps.put(tilemap.getId(), tilemap);

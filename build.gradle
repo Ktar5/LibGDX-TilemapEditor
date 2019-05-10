@@ -1,12 +1,17 @@
 plugins {
     id 'java'
     id 'maven'
+    id 'application'
 }
 
 group 'com.ktar5'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
+
+application {
+    mainClassName = 'com.ktar5.tileeditor.Main'
+}
 
 repositories {
     mavenCentral()

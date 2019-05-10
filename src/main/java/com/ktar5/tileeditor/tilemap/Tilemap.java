@@ -37,7 +37,8 @@ public class Tilemap implements Tabbable {
                 json.getJSONObject("dimensions").getInt("numTilesWide"),
                 json.getJSONObject("dimensions").getInt("numTilesHigh"),
                 json.getJSONObject("dimensions").getInt("tileWidth"),
-                json.getJSONObject("dimensions").getInt("tileHeight"));
+                json.getJSONObject("dimensions").getInt("tileHeight"),
+                UUID.fromString(json.getString("identifier")));
         rootProperty.deserialize(json.getJSONObject("properties"));
         tilesets.loadTilesets(json.getJSONArray("tilesets"));
         layers.deserialize(json.getJSONArray("layers"));
@@ -53,7 +54,7 @@ public class Tilemap implements Tabbable {
      * @param tileWidth    pixel width of a tile on this map
      * @param tileHeight   pixel height of a tile on this map
      */
-    public Tilemap(File saveFile, int numTilesWide, int numTilesHigh, int tileWidth, int tileHeight) {
+    public Tilemap(File saveFile, int numTilesWide, int numTilesHigh, int tileWidth, int tileHeight, UUID id) {
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
         this.numTilesHigh = numTilesHigh;
@@ -64,7 +65,7 @@ public class Tilemap implements Tabbable {
 
         this.saveFile = saveFile;
         this.rootProperty = new RootProperty();
-        this.id = UUID.randomUUID();
+        this.id = id;
         this.layers = new Layers(this);
         this.tilesets = new Tilesets(this);
     }
@@ -87,6 +88,8 @@ public class Tilemap implements Tabbable {
         JSONObject json = new JSONObject();
 
         getRootProperty().serialize(json);
+
+        json.put("identifier", id.toString());
 
         JSONObject dimensions = new JSONObject();
         dimensions.put("numTilesWide", getNumTilesWide());

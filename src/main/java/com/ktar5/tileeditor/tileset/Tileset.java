@@ -50,7 +50,8 @@ public class Tileset implements Tabbable {
                 json.getJSONObject("offset").getInt("left"),
                 json.getJSONObject("offset").getInt("up"),
                 json.getInt("tileWidth"),
-                json.getInt("tileHeight"));
+                json.getInt("tileHeight"),
+                UUID.fromString(json.getString("identifier")));
         rootProperty.deserialize(json.getJSONObject("properties"));
     }
 
@@ -68,7 +69,7 @@ public class Tileset implements Tabbable {
      * @param tileHeight        the height of each tile in pixels
      */
     public Tileset(File sourceFile, File saveFile, int paddingVertical, int paddingHorizontal,
-                   int offsetLeft, int offsetUp, int tileWidth, int tileHeight) {
+                   int offsetLeft, int offsetUp, int tileWidth, int tileHeight, UUID id) {
         this.sourceFile = sourceFile;
         this.saveFile = saveFile;
         this.tileWidth = tileWidth;
@@ -139,6 +140,8 @@ public class Tileset implements Tabbable {
         JSONObject json = new JSONObject();
 
         rootProperty.serialize(json);
+
+        json.put("identifier", id.toString());
 
         JSONObject padding = new JSONObject();
         padding.put("horizontal", this.getPaddingHorizontal());

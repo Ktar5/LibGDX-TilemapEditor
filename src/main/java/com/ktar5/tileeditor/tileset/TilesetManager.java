@@ -85,7 +85,7 @@ public class TilesetManager {
         Tileset tileset = new Tileset(createDialog.getSourceFile().file(), createDialog.getTilesetFile().file(),
                 createDialog.getPaddingVertical(), createDialog.getPaddingHorizontal(),
                 createDialog.getOffsetLeft(), createDialog.getOffsetUp(),
-                createDialog.getTileWidth(), createDialog.getTileHeight());
+                createDialog.getTileWidth(), createDialog.getTileHeight(), UUID.randomUUID());
 
         tilesetHashMap.put(tileset.getId(), tileset);
         Main.getInstance().getRoot().getTabHoldingPane().addTab(new TilesetTab(tileset.getId()));
