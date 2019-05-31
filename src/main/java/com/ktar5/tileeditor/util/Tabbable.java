@@ -20,10 +20,10 @@ public interface Tabbable extends Interactable {
      */
     public void save();
 
-    @DontOverride
     /**
      * Saves the tabbable to a chosen file.
      */
+    @DontOverride
     public default void saveAs() {
         FileChooser fileChooser = Main.getInstance().getRoot().getFileChooser();
         fileChooser.setMode(FileChooser.Mode.SAVE);
@@ -78,10 +78,14 @@ public interface Tabbable extends Interactable {
      */
     public void updateSaveFile(File file);
 
+    public void undo();
+
+    public void redo();
+
     /**
      * Turn a Tabbable into a JSONObject manually to assure the
      * proper serialization of the data into json.
-     *
+     * <p>
      * Note: all implementations must call super
      */
     @CallSuper

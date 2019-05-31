@@ -8,7 +8,7 @@ import com.kotcrab.vis.ui.widget.*;
 import com.ktar5.tileeditor.tilemap.Layers;
 import com.ktar5.tileeditor.tilemap.Tilemap;
 import com.ktar5.tileeditor.tilemap.layers.BaseLayer;
-import com.ktar5.tileeditor.tilemap.layers.TileLayer;
+import com.ktar5.tileeditor.tilemap.layers.tile.TileLayer;
 import com.ktar5.tileeditor.util.KChangeListener;
 import lombok.Getter;
 

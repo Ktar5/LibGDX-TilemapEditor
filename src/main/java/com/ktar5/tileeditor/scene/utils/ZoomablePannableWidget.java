@@ -34,7 +34,7 @@ public abstract class ZoomablePannableWidget extends Widget {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                if (button == Input.Buttons.MIDDLE) {
+                if (button == Input.Buttons.RIGHT) {
                     isDragging = false;
                 }
             }
@@ -70,7 +70,7 @@ public abstract class ZoomablePannableWidget extends Widget {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (button == Input.Buttons.MIDDLE) {
+                if (button == Input.Buttons.RIGHT) {
                     isDragging = true;
                     lastX = x;
                     lastY = y;

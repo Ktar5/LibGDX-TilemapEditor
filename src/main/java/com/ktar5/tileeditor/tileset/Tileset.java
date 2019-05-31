@@ -6,12 +6,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.ktar5.tileeditor.properties.RootProperty;
 import com.ktar5.tileeditor.util.Tabbable;
 import com.ktar5.utilities.annotation.callsuper.CallSuper;
+import com.ktar5.utilities.common.undo.UndoStack;
+import com.ktar5.utilities.common.undo.UndoStack_Linked;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.NotImplementedException;
 import org.json.JSONObject;
 import org.mini2Dx.gdx.utils.IntMap;
-import org.pmw.tinylog.Logger;
+import org.tinylog.Logger;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -23,6 +25,7 @@ import java.util.UUID;
 public class Tileset implements Tabbable {
     public static final int SCALE = 1;
     private RootProperty rootProperty;
+    private final UndoStack_Linked undoStack;
 
     private UUID id;
     private IntMap<TextureRegion> tileImages;
@@ -70,6 +73,7 @@ public class Tileset implements Tabbable {
      */
     public Tileset(File sourceFile, File saveFile, int paddingVertical, int paddingHorizontal,
                    int offsetLeft, int offsetUp, int tileWidth, int tileHeight, UUID id) {
+        this.undoStack = new UndoStack_Linked();
         this.sourceFile = sourceFile;
         this.saveFile = saveFile;
         this.tileWidth = tileWidth;
@@ -210,6 +214,16 @@ public class Tileset implements Tabbable {
         this.saveFile = file;
     }
 
+    @Override
+    public void undo() {
+        undoStack.undo();
+    }
+
+    @Override
+    public void redo() {
+        undoStack.redo();
+    }
+
     public int getIdFromXY(int x, int y) {
         if (y >= getRows() || x >= getColumns() || x < 0 || y < 0) {
             Logger.debug("ERROR >> Finding tileset tile x: " + x + " y:" + y + " OUT OF BOUNDS");
@@ -218,6 +232,7 @@ public class Tileset implements Tabbable {
         return (y * (getColumns())) + x;
     }
 
+    @Deprecated
     public TextureRegion getTextureRegionFromXY(int x, int y) {
         int id = getIdFromXY(x, y);
         if (id == -1) {
@@ -226,6 +241,7 @@ public class Tileset implements Tabbable {
         return getTileImages().get(id);
     }
 
+    @Deprecated
     public Tile getTileFromXY(int x, int y) {
         int id = getIdFromXY(x, y);
         if (id == -1) {

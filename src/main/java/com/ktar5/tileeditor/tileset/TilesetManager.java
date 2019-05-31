@@ -11,7 +11,7 @@ import com.ktar5.tileeditor.scene.dialogs.GenericAlert;
 import com.ktar5.tileeditor.scene.tabs.TilesetTab;
 import com.ktar5.tileeditor.util.StringUtil;
 import org.json.JSONObject;
-import org.pmw.tinylog.Logger;
+import org.tinylog.Logger;
 
 import java.io.File;
 import java.io.FileWriter;

@@ -12,7 +12,7 @@ import com.ktar5.tileeditor.scene.utils.FileOpenChangeListener;
 import com.ktar5.tileeditor.util.KChangeListener;
 import lombok.Builder;
 import lombok.Getter;
-import org.pmw.tinylog.Logger;
+import org.tinylog.Logger;
 
 import java.util.function.Consumer;
 
@@ -81,7 +81,7 @@ public class CreateTilemap {
         smallValues.add(width).left().width(40);
 
         smallValues.add().space(20);
-        smallValues.add(new VisLabel("Tile Width:")).space(5).left();
+        smallValues.add(new VisLabel("TileTexture Width:")).space(5).left();
         smallValues.add(tileWidth).width(40);
 
         smallValues.row();
@@ -90,7 +90,7 @@ public class CreateTilemap {
         smallValues.add(height).left().width(40);
         smallValues.add().space(20);
 
-        smallValues.add(new VisLabel("Tile Height:")).space(5).left();
+        smallValues.add(new VisLabel("TileTexture Height:")).space(5).left();
         smallValues.add(tileHeight).width(40);
 
 

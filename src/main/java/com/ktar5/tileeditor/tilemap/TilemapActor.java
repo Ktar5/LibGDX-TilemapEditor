@@ -11,8 +11,10 @@ import com.ktar5.tileeditor.Main;
 import com.ktar5.tileeditor.scene.tabs.TilemapTab;
 import com.ktar5.tileeditor.scene.utils.ZoomablePannableWidget;
 import com.ktar5.tileeditor.tilemap.layers.BaseLayer;
-import com.ktar5.tileeditor.tilemap.layers.TileLayer;
+import com.ktar5.tileeditor.tilemap.layers.tile.TileLayer;
 import com.ktar5.tileeditor.tileset.Tile;
+import com.ktar5.utilities.common.undo.UndoGroup;
+import com.ktar5.utilities.common.undo.UniqueUndoGroup;
 
 public class TilemapActor extends ZoomablePannableWidget {
     private final Tilemap tilemap;
@@ -55,37 +57,58 @@ public class TilemapActor extends ZoomablePannableWidget {
                 return true;
             }
 
-            int buttonTouchedDown = 0;
+            private int buttonTouchedDown = 0;
 
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
+            private UniqueUndoGroup undoGroup;
+
+            private void createTile(InputEvent event, float x, float y, int pointer, int button) {
                 if (button == Input.Buttons.LEFT) {
                     Tile selectedTile = getTab().getTilesetSidebar().getSelectedTile();
                     if (selectedTile == null) {
-                        return false;
+                        return;
                     }
                     BaseLayer activeLayer = tilemap.getLayers().getActiveLayer();
                     if (activeLayer instanceof TileLayer) {
                         TileLayer tileLayer = (TileLayer) activeLayer;
-                        tileLayer.setTile(selectedTile, (int) tileHovered.x, (int) (tilemap.getNumTilesHigh() - tileHovered.y));
+                        undoGroup.add(tileLayer.setTileAsGroup(selectedTile, (int) tileHovered.x,
+                                (int) (tilemap.getNumTilesHigh() - tileHovered.y)));
                     }
                     getTab().setDirty(true);
-                } else if (button == Input.Buttons.RIGHT) {
+                } else if (button == Input.Buttons.MIDDLE) {
                     BaseLayer activeLayer = tilemap.getLayers().getActiveLayer();
                     if (activeLayer instanceof TileLayer) {
                         TileLayer tileLayer = (TileLayer) activeLayer;
-                        tileLayer.setTile(null, (int) tileHovered.x, (int) (tilemap.getNumTilesHigh() - tileHovered.y));
+                        undoGroup.add(tileLayer.setTileAsGroup(null, (int) tileHovered.x,
+                                (int) (tilemap.getNumTilesHigh() - tileHovered.y)));
                     }
                     getTab().setDirty(true);
                 }
                 buttonTouchedDown = button;
+            }
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+//                System.out.println("Downed----");
+                undoGroup = new UniqueUndoGroup();
+                createTile(event, x, y, pointer, button);
                 return true;
             }
 
             @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+//                System.out.println("Upped");
+                if (undoGroup != null && undoGroup.size() > 0) {
+                    tilemap.getUndoStack().push(undoGroup);
+                    undoGroup = null;
+                }
+            }
+
+            @Override
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
+//                System.out.println("Dragged------");
                 mouseMoved(event, x, y);
-                touchDown(event, x, y, pointer, buttonTouchedDown);
+                createTile(event, x, y, pointer, buttonTouchedDown);
             }
         });
     }

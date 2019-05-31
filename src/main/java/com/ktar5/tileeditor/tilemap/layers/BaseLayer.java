@@ -7,7 +7,7 @@ import com.ktar5.tileeditor.tilemap.TilemapActor;
 import com.ktar5.utilities.annotation.callsuper.CallSuper;
 import lombok.Getter;
 import org.json.JSONObject;
-import org.pmw.tinylog.Logger;
+import org.tinylog.Logger;
 
 @Getter
 public abstract class BaseLayer {

@@ -9,7 +9,7 @@ import com.ktar5.tileeditor.properties.ParentProperty;
 import com.ktar5.tileeditor.properties.Property;
 import com.ktar5.tileeditor.properties.StringProperty;
 import com.ktar5.tileeditor.util.KChangeListener;
-import org.pmw.tinylog.Logger;
+import org.tinylog.Logger;
 
 public class PropertiesRClickMenu extends PopupMenu {
 

@@ -1,24 +1,21 @@
-package com.ktar5.tileeditor.tilemap.layers;
+package com.ktar5.tileeditor.tilemap.layers.tile;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.ktar5.tileeditor.tilemap.Tilemap;
 import com.ktar5.tileeditor.tilemap.TilemapActor;
+import com.ktar5.tileeditor.tilemap.layers.BaseLayer;
 import com.ktar5.tileeditor.tileset.Tile;
 import com.ktar5.tileeditor.tileset.Tileset;
 import com.ktar5.utilities.common.constants.Direction;
-import lombok.AccessLevel;
-import lombok.Getter;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.pmw.tinylog.Logger;
+import org.tinylog.Logger;
 
 import java.util.Optional;
 
-@Getter
 public class TileLayer extends BaseLayer {
-    @Getter(AccessLevel.NONE)
-    protected Tile[][] grid;
+    Tile[][] grid;
 
     public TileLayer(Tilemap parent, JSONObject json) {
         super(parent, json);
@@ -134,6 +131,7 @@ public class TileLayer extends BaseLayer {
         }
     }
 
+    @Deprecated
     public Optional<Tile> tileFromPoint(int x, int y) {
         if (!parent.isInMapRange(x, y)) {
             throw new RuntimeException("Point (" + x + ", " + y + ") is not in the bounds of map: " + parent.getName());
@@ -146,17 +144,40 @@ public class TileLayer extends BaseLayer {
             return Optional.of(grid[x][y]);
     }
 
+    public SetTileCommand setTileAsGroup(int blockId, int direction, Tileset tileset, int x, int y) {
+        return this.setTileAsGroup(new Tile(blockId, direction, tileset), x, y);
+    }
+
+    public SetTileCommand setTileAsGroup(Tile tile, int x, int y) {
+        if (x < 0 || y < 0 || x >= grid.length || y >= grid[0].length) {
+            Logger.debug("Tried setting tile outside of bounds, ignored.");
+            return null;
+        }
+//        if(tile == null && grid[x][y] == null){
+//            return null;
+//        }
+//        if(tile != null && tile.equalsTile(grid[x][y])){
+//            return null;
+//        }
+        //Sends a command to set the tile
+        return new SetTileCommand(this, x, y, tile);
+    }
+
     public void setTile(int blockId, int direction, Tileset tileset, int x, int y) {
         this.setTile(new Tile(blockId, direction, tileset), x, y);
     }
 
     public void setTile(Tile tile, int x, int y) {
-        if (x < 0 || y < 0 || x >= grid.length || y >= grid[0].length) {
-            Logger.debug("Tried setting tile outside of bounds, ignored.");
-            return;
-        }
-        grid[x][y] = tile;
+        getParent().getUndoStack().push(setTileAsGroup(tile, x, y));
     }
+
+    public Tile getTile(int x, int y) {
+        if (x < 0 || y < 0 || x >= grid.length || y >= grid[0].length) {
+            throw new RuntimeException("Tried getting tile outside of bounds, ignored.");
+        }
+        return grid[x][y];
+    }
+
 
     public void removeTile(int x, int y) {
         setTile(null, x, y);

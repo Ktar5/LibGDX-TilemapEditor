@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.kotcrab.vis.ui.VisUI;
+import com.ktar5.tileeditor.input.Input;
 import com.ktar5.tileeditor.scene.Root;
 import lombok.Getter;
 

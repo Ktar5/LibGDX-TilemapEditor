@@ -7,7 +7,7 @@ import com.ktar5.tileeditor.scene.tabs.TilemapTab;
 import com.ktar5.tileeditor.tilemap.Tilemap;
 import lombok.Getter;
 import org.json.JSONArray;
-import org.pmw.tinylog.Logger;
+import org.tinylog.Logger;
 
 import java.io.File;
 import java.nio.file.Paths;

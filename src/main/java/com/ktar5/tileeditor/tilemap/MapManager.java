@@ -5,39 +5,24 @@ import com.ktar5.tileeditor.scene.dialogs.CreateTilemap;
 import com.ktar5.tileeditor.scene.dialogs.GenericAlert;
 import com.ktar5.tileeditor.scene.dialogs.LoadDialog;
 import com.ktar5.tileeditor.scene.tabs.TilemapTab;
-import com.ktar5.tileeditor.tilemap.layers.TileLayer;
+import com.ktar5.tileeditor.tilemap.layers.tile.TileLayer;
 import com.ktar5.tileeditor.util.StringUtil;
 import org.json.JSONObject;
-import org.pmw.tinylog.Configurator;
-import org.pmw.tinylog.Level;
-import org.pmw.tinylog.Logger;
-import org.pmw.tinylog.writers.ConsoleWriter;
+import org.tinylog.Logger;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
 public class MapManager {
     private static MapManager instance;
     private HashMap<UUID, Tilemap> openMaps;
-    private ArrayList<Class<? extends Tilemap>> registeredMapTypes;
 
     public MapManager() {
         instance = this;
-        registeredMapTypes = new ArrayList<>();
         openMaps = new HashMap<>();
-
-        //Initialize tinylog
-        Configurator.defaultConfig()
-                .writer(new ConsoleWriter())
-                .level(Level.DEBUG)
-                .addWriter(new org.pmw.tinylog.writers.FileWriter("log.txt"))
-                .formatPattern("{date:mm:ss:SSS} {class_name}.{method}() [{level}]: {message}")
-                .activate();
-
     }
 
     /**
@@ -100,7 +85,7 @@ public class MapManager {
                 createTilemap.getHeight(),
                 createTilemap.getTileWidth(),
                 createTilemap.getTileHeight(), UUID.randomUUID());
-        TileLayer tileLayer = new TileLayer(tilemap, "Tile Layer", true, 0, 0);
+        TileLayer tileLayer = new TileLayer(tilemap, "TileTexture Layer", true, 0, 0);
         tilemap.getLayers().getLayers().add(tileLayer);
         openMaps.put(tilemap.getId(), tilemap);
         TilemapTab tilemapTab = new TilemapTab(tilemap);

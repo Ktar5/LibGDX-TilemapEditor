@@ -2,7 +2,7 @@ package com.ktar5.tileeditor.tilemap;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.ktar5.tileeditor.tilemap.layers.BaseLayer;
-import com.ktar5.tileeditor.tilemap.layers.TileLayer;
+import com.ktar5.tileeditor.tilemap.layers.tile.TileLayer;
 import lombok.Getter;
 import org.json.JSONArray;
 
@@ -76,7 +76,7 @@ public class Layers {
 
 
     public void remove(BaseLayer layer) {
-        int id = idFromLayer(layer);
+//        int id = idFromLayer(layer);
         layers.remove(layer);
     }
 }

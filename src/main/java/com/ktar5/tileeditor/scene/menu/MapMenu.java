@@ -8,7 +8,7 @@ import com.ktar5.tileeditor.scene.tabs.TilemapTab;
 import com.ktar5.tileeditor.tilemap.Layers;
 import com.ktar5.tileeditor.tilemap.MapManager;
 import com.ktar5.tileeditor.tilemap.Tilemap;
-import com.ktar5.tileeditor.tilemap.layers.TileLayer;
+import com.ktar5.tileeditor.tilemap.layers.tile.TileLayer;
 import com.ktar5.tileeditor.tileset.TilesetManager;
 import com.ktar5.tileeditor.util.KChangeListener;
 

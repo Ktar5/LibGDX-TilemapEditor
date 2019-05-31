@@ -9,9 +9,9 @@ import java.util.Objects;
 
 @Getter
 public class Tile implements ToolSerializeable {
-    private Tileset tileset;
-    private int blockId;
-    private int direction;
+    private final int direction;
+    protected final Tileset tileset;
+    protected final int blockId;
 
     public Tile(int blockId, int direction, Tileset tileset) {
         this.tileset = tileset;
@@ -38,8 +38,14 @@ public class Tile implements ToolSerializeable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tile tile = (Tile) o;
-        return blockId == tile.blockId &&
-                direction == tile.direction;
+        return equalsTile(tile);
+    }
+
+    public boolean equalsTile(Tile tile) {
+        if (tile == null) {
+            return false;
+        }
+        return blockId == tile.blockId && direction == tile.direction && tileset.getId().equals(tile.getTileset().getId());
     }
 
     @Override

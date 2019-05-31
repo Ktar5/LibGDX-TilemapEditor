@@ -3,7 +3,7 @@ package com.ktar5.tileeditor.tilemap.layers;//package com.ktar5.tileeditor.tilem
 //import com.badlogic.gdx.InputProcessor;
 //import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 //import com.ktar5.Tilemap;
-//import com.ktar5.tileeditor.tilemap.whole.Tile;
+//import com.ktar5.tileeditor.tilemap.whole.TileTexture;
 //import javafx.scene.input.MouseButton;
 //import javafx.scene.input.MouseEvent;
 //import javafx.scene.layout.Pane;
@@ -24,10 +24,10 @@ package com.ktar5.tileeditor.tilemap.layers;//package com.ktar5.tileeditor.tilem
 //        } else {
 //            String[] split = block.split("_");
 //            if (split.length == 2) {
-//                this.grid[x][y] = new Tile(Integer.valueOf(split[1]), 0,
+//                this.grid[x][y] = new TileTexture(Integer.valueOf(split[1]), 0,
 //                        getParent().getTilesets().getTileset(split[0]));
 //            } else if (split.length == 3) {
-//                this.grid[x][y] = new Tile(Integer.valueOf(split[1]), Integer.valueOf(split[2]),
+//                this.grid[x][y] = new TileTexture(Integer.valueOf(split[1]), Integer.valueOf(split[2]),
 //                        getParent().getTilesets().getTileset(split[0]));
 //            } else {
 //                Logger.debug("Length > 3 error");
@@ -113,7 +113,7 @@ package com.ktar5.tileeditor.tilemap.layers;//package com.ktar5.tileeditor.tilem
 //                if (grid[x][y] == null) {
 //                    continue;
 //                }
-//                int blockId = ((Tile) grid[x][y]).getBlockId();
+//                int blockId = ((TileTexture) grid[x][y]).getBlockId();
 //                if (blockId == 0) {
 //                    continue;
 //                }
@@ -122,7 +122,7 @@ package com.ktar5.tileeditor.tilemap.layers;//package com.ktar5.tileeditor.tilem
 //        }
 //    }
 //
-//    public void set(int x, int y, Tile tile) {
+//    public void set(int x, int y, TileTexture tile) {
 //        if (tile == null || getTileset() == null) {
 //            return;
 //        }
@@ -137,14 +137,14 @@ package com.ktar5.tileeditor.tilemap.layers;//package com.ktar5.tileeditor.tilem
 //    public void setCurrent(int x, int y) {
 //        if (getTileset() == null) return;
 //
-//        if (grid[x][y] != null && grid[x][y] instanceof Tile) {
-//            Tile Tile = (Tile) this.grid[x][y];
-//            Tile.setBlockId(currentId);
-//            Tile.setDirection(currentData);
-//            Tile.updateAllImageViews();
+//        if (grid[x][y] != null && grid[x][y] instanceof TileTexture) {
+//            TileTexture TileTexture = (TileTexture) this.grid[x][y];
+//            TileTexture.setBlockId(currentId);
+//            TileTexture.setDirection(currentData);
+//            TileTexture.updateAllImageViews();
 //        } else {
 //            remove(x, y);
-//            this.grid[x][y] = new Tile(currentId, currentData, getTileset());
+//            this.grid[x][y] = new TileTexture(currentId, currentData, getTileset());
 //            this.grid[x][y].updateAllImageViews();
 //            Pane pane = EditorCoordinator.get().getEditor().getTabDrawingPane(getId());
 //            this.grid[x][y].draw(pane, x * getTileWidth(), y * getTileWidth());

@@ -4,6 +4,8 @@ import com.ktar5.tileeditor.properties.RootProperty;
 import com.ktar5.tileeditor.tileset.Tilesets;
 import com.ktar5.tileeditor.util.Tabbable;
 import com.ktar5.utilities.annotation.callsuper.CallSuper;
+import com.ktar5.utilities.common.undo.UndoStack;
+import com.ktar5.utilities.common.undo.UndoStack_Linked;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.json.JSONObject;
@@ -14,15 +16,16 @@ import java.util.UUID;
 @Getter
 @EqualsAndHashCode
 public class Tilemap implements Tabbable {
-    private Layers layers;
-    private Tilesets tilesets;
-    private RootProperty rootProperty;
+    private final Layers layers;
+    private final Tilesets tilesets;
+    private final RootProperty rootProperty;
+    private final UndoStack_Linked undoStack;
 
     private final int tileWidth, tileHeight;
     private final int numTilesWide, numTilesHigh;
     private final int dimensionX, dimensionY;
 
-    private UUID id;
+    private final UUID id;
     private File saveFile;
 
     /**
@@ -55,6 +58,7 @@ public class Tilemap implements Tabbable {
      * @param tileHeight   pixel height of a tile on this map
      */
     public Tilemap(File saveFile, int numTilesWide, int numTilesHigh, int tileWidth, int tileHeight, UUID id) {
+        this.undoStack = new UndoStack_Linked();
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
         this.numTilesHigh = numTilesHigh;
@@ -134,6 +138,16 @@ public class Tilemap implements Tabbable {
     @Override
     public void updateSaveFile(File file) {
         this.saveFile = file;
+    }
+
+    @Override
+    public void undo() {
+        undoStack.undo();
+    }
+
+    @Override
+    public void redo() {
+        undoStack.redo();
     }
 
 }

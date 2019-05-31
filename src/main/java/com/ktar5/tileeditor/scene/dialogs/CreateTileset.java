@@ -33,9 +33,9 @@ public class CreateTileset {
         VisValidatableTextField imagePath = new VisValidatableTextField();
         imagePath.setReadOnly(true);
 
-        NumberTextField tileHeightField = new NumberTextField("Tile Height", 16);
+        NumberTextField tileHeightField = new NumberTextField("TileTexture Height", 16);
         tileHeightField.setSize(20, tileHeightField.getHeight());
-        NumberTextField tileWidthField = new NumberTextField("Tile Width", 16);
+        NumberTextField tileWidthField = new NumberTextField("TileTexture Width", 16);
         tileWidthField.setSize(20, tileHeightField.getHeight());
         NumberTextField paddingVertField = new NumberTextField("Vertical Padding", 0);
         paddingVertField.setSize(20, tileHeightField.getHeight());
@@ -111,7 +111,7 @@ public class CreateTileset {
         smallValues.add(paddingHorzField).left().width(40);
 
         smallValues.add().space(20);
-        smallValues.add(new VisLabel("Tile Width:")).space(5).left();
+        smallValues.add(new VisLabel("TileTexture Width:")).space(5).left();
         smallValues.add(tileWidthField).left().width(40);
 
         smallValues.add().space(20);
@@ -125,7 +125,7 @@ public class CreateTileset {
         smallValues.add(offsetUpField).left().width(40);
 
         smallValues.add().space(20);
-        smallValues.add(new VisLabel("Tile Height:")).space(5).left();
+        smallValues.add(new VisLabel("TileTexture Height:")).space(5).left();
         smallValues.add(tileHeightField).left().width(40);
 
         smallValues.add().space(20);

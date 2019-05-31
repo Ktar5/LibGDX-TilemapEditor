@@ -1,8 +1,10 @@
-package com.ktar5.tileeditor;
+package com.ktar5.tileeditor.input;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.ktar5.tileeditor.Main;
 import com.ktar5.tileeditor.scene.utils.ZoomablePannableWidget;
 
 public class Input implements InputProcessor {
@@ -11,9 +13,21 @@ public class Input implements InputProcessor {
 
     }
 
+    public boolean isKeyPressed(int key) {
+        return Gdx.input.isKeyPressed(key);
+    }
+
     @Override
     public boolean keyDown(int keycode) {
-        return false;
+        if(UndoRedoInput.keyPressed(keycode)){
+            return true;
+        }else if((isKeyPressed(Keys.CONTROL_LEFT) || isKeyPressed(Keys.CONTROL_RIGHT)) && keycode == Keys.S){
+            if(Main.getInstance().getRoot().getTabHoldingPane().getCurrentTab() == null){
+                return false;
+            }
+            Main.getInstance().getRoot().getTabHoldingPane().getCurrentTab().save();
+        }
+        return UndoRedoInput.keyPressed(keycode);
     }
 
     @Override
